@@ -135,6 +135,9 @@ public class Hero : MonoBehaviour
             }
 
         }
+
+        pUp.AbsorbedBy(this.gameObject);
+
     }
 
 

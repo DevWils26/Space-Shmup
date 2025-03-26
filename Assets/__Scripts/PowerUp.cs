@@ -94,7 +94,7 @@ public class PowerUp : MonoBehaviour
         WeaponDefinition def = Main.GET_WEAPON_DEFINITION(wt);  // Get the weapon definition for this type
         cubeMat.color = def.powerUpColor;  // Color the PowerUp based on its weapon definition
         letter.text = def.letter.ToString();  // Set the corresponding letter for the PowerUp
-        type = wt;  // Assign the type to this PowerUp
+        _type = wt;  // Assign the type to this PowerUp
 
         Debug.Log("PowerUp Set to Type: " + wt);  // Debug log to confirm
     }
