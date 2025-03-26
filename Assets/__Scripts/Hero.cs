@@ -101,44 +101,40 @@ public class Hero : MonoBehaviour
     }
 
     public void AbsorbPowerUp(PowerUp pUp) {
+
         Debug.Log("Absorbed PowerUp: " + pUp.type);
-        switch (pUp.type) {
-            case eWeaponType.shield:
-                shieldLevel++;
-                break;
 
-            default:
-                // Check if any weapon slot has the same type as the new power-up
-                bool weaponAssigned = false;
+ 
 
-                for (int i = 0; i < weapons.Length; i++) {
-                    if (weapons[i].type == pUp.type) {
-                        // If the weapon already exists in the slot, do nothing
-                        Debug.Log("Weapon already equipped in slot " + i);
-                        weaponAssigned = true;
-                        break;
-                    }
-                }
+        if (pUp.type == eWeaponType.shield) {
 
-                if (!weaponAssigned) {
-                    // If no matching weapon, assign the new power-up to the first empty slot
-                    Weapon weap = GetEmptyWeaponSlot();
-                    if (weap != null) {
-                        weap.SetType(pUp.type);
-                        Debug.Log("Assigned " + pUp.type + " to empty slot.");
-                    } 
-                    else {
-                        // If no empty slot is available, replace the first weapon with the new one
-                        ClearWeapons();  // This will reset all weapons
-                        weapons[0].SetType(pUp.type);
-                        Debug.Log("Assigned " + pUp.type + " to weapons[0] after clearing.");
-                    }
-                }
-                break;
+            shieldLevel++;
+
         }
 
-        // Mark the power-up as absorbed
-        pUp.AbsorbedBy(this.gameObject);
+        else if (pUp.type == eWeaponType.blaster || pUp.type == eWeaponType.spread) {
+
+            if (weapons[0].type != pUp.type) {
+                // Switch to the new weapon type and reset to one gun
+                ClearWeapons();
+                weapons[0].SetType(pUp.type);
+                Debug.Log("Switched to " + pUp.type + " with one gun.");
+
+            } 
+            else {
+                // Already that weapon type; try to add an extra gun
+                Weapon emptySlot = GetEmptyWeaponSlot();
+
+                if (emptySlot != null) {
+
+                    emptySlot.SetType(pUp.type);
+                    Debug.Log("Added extra " + pUp.type + " gun.");
+
+                }
+
+            }
+
+        }
     }
 
 
